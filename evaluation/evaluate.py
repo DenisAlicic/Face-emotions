@@ -4,6 +4,7 @@ import os
 import tensorflow.keras as keras
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 import random
 
 def get_merged(input_folder):
@@ -15,7 +16,6 @@ def get_merged(input_folder):
         data.append(array)
 
     data = np.vstack([data[i] for i in range(0,len(data))])
-    random.shuffle(data)
     print(data.shape)
     print(np.bincount(np.array(data[:,-1],dtype='int64')))
     return (data[:,0:-1],data[:,-1])
@@ -40,6 +40,7 @@ def main():
     Y_predict = model.predict_classes(X_test)
     print(classification_report(Y_test, Y_predict))
     print(accuracy_score(Y_test, Y_predict))
+    print(confusion_matrix(Y_test, Y_predict))
 
 
 if __name__ == "__main__":
