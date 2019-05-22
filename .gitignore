@@ -1,0 +1,15 @@
+# Executables
+*.exe
+*.out
+
+# Numpy arrays
+*.npy
+
+# Latex tmp files
+*.log
+*.aux
+*.toc
+*.blg
+*.bbl
+*.gz
+
