@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow import keras
 import face_recognition
 import argparse
+import sys
 
 def main():
     parser = argparse.ArgumentParser(
@@ -30,15 +31,18 @@ def main():
             6 : "Neutral"
             }
     args = parser.parse_args()
+
     img = cv2.imread(args.input_path)
-    face_embedding = np.array(face_recognition.face_encodings(img))
-    print(face_embedding)
+    face_locations = face_recognition.face_locations(img)
+    if len(face_locations) == 0:
+        print("There is no face in the image")
+        sys.exit()
+    face_embedding = np.array(face_recognition.face_encodings(img,face_locations))
     model = keras.models.load_model(args.model_path)
     predictons = model.predict_classes(face_embedding)
-    for predicton in predictons:
-        print(labels[predicton])
-    img = cv2.resize(img,(160,160))
-    cv2.imshow("Goal",img)
+    img = cv2.resize(img,(240,240))
+    text = labels[predictons[0]]
+    cv2.imshow(text,img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 if __name__ == "__main__":
