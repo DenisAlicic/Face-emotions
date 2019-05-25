@@ -31,8 +31,15 @@ def main():
             6 : "Neutral"
             }
     args = parser.parse_args()
-
-    img = cv2.imread(args.input_path)
+    if args.input_path == "0":
+        camera = cv2.VideoCapture(0)
+        input("Pres Enter to capture")
+        ret_val, img = camera.read()
+        if not ret_val:
+            sys.exit()
+        camera.release()
+    else:
+        img = cv2.imread(args.input_path)
     face_locations = face_recognition.face_locations(img)
     if len(face_locations) == 0:
         print("There is no face in the image")
