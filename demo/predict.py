@@ -76,7 +76,7 @@ def main():
         img = cv2.resize(img,(240,240))
     else:
         text_width, text_height = cv2.getTextSize(text,font,fontScale,lineType)[0]
-        topRightCornerOfText = (img.shape[0]+150,text_height+10)
+        topRightCornerOfText = (img.shape[0]+120,text_height+10)
         cv2.putText(img,text,
                     topRightCornerOfText,
                     font,
